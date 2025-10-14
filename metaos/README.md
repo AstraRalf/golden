@@ -1,4 +1,11 @@
-# MetaOS
+# MetaOS v0 — 7 Agenten
 
-- Systemsteuerung
-- 7-Agenten-Architektur (Platzhalter)
+- Orchestrator
+- Memory
+- Tools
+- Knowledge
+- Guardrails
+- UX
+- Integrations
+
+Kurz: Namen stehen, Details folgen in v1.
