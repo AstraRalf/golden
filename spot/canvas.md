@@ -1,4 +1,4 @@
-﻿# Canvas (SPOT)
+# Canvas (SPOT)
 
 **Status:** ACTIVE
 **Owner:** @AstraRalf
