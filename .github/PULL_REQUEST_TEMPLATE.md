@@ -1,14 +1,9 @@
-## Summary
-Kurzbeschreibung der Änderung.
+### Summary
 
-## Motivation
-Warum ist die Änderung nötig?
+### Changes
 
-## Änderungen
-- [ ] Punkt 1
-- [ ] Punkt 2
-
-## Checklist
-- [ ] Keine Secrets in den Änderungen
-- [ ] Lokale Checks/Tests ok
-- [ ] PR-Titel folgt *Conventional Commits*
+### Governance Checklist
+- [ ] SPOT updated or N/A (#LamaSPOT)
+- [ ] Maintainer review
+- [ ] Legal/UX check if applicable (#UXLegal)
+- [ ] Changelog/ADR updated if needed (#Governance)
