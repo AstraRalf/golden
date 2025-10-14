@@ -1,0 +1,34 @@
+name: ci-whitespace
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  whitespace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check trailing whitespace and newline at EOF
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "Scanning for trailing whitespace..."
+          if git grep -nI -E '[[:space:]]+$' -- ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.ico' ':!*.pdf' ':!*.svg' ; then
+            echo "Found trailing whitespace above. Please remove."; exit 1
+          else
+            echo "No trailing whitespace."
+          fi
+          echo "Checking newline at EOF..."
+          fail=0
+          while IFS= read -r -d '' f; do
+            # skip binary files
+            if file -b --mime "$f" | grep -qi 'charset=binary'; then continue; fi
+            if [ -s "$f" ] && [ "$(tail -c1 "$f" | wc -l)" -eq 0 ]; then
+              echo "No newline at end of file: $f"; fail=1
+            fi
+          done < <(git ls-files -z ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.ico' ':!*.pdf' ':!*.svg')
+          [ $fail -eq 0 ] || exit 1
