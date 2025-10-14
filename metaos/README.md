@@ -1,11 +1,18 @@
-# MetaOS v1 — 7 Agenten (Zuständigkeiten, kurz)
+# MetaOS (v0) — 7-Agenten-Skelett
 
-- **Orchestrator** — steuert Aufgabenfluss, delegiert an Agenten, priorisiert und beendet Workflows.
-- **Memory** — verwaltet kurz-/langfristigen Kontext und stellt relevante Erinnerungen bereit.
-- **Tools** — kapselt Tool-Aufrufe (APIs/CLI), prüft Parameter, handhabt Fehler und Limits.
-- **Knowledge** — kuratiert Wissensquellen, Retrieval/Ranking und saubere Zitationen.
-- **Guardrails** — Policies & Safety: PII/Secrets, Compliance, Output-Validierung.
-- **UX** — Eingabe-/Ausgabeformate, Prompts, Tonalität und Nutzerführung.
-- **Integrations** — Anbindung externer Systeme (Issue-Tracker, Repos, Chats, Datenquellen).
+**Status:** DRAFT
+**Stand:** 2025-10-14
+**Scope:** Lama/Seat-Stack
 
-Kurz: Namen und Verantwortlichkeiten stehen; Details folgen in v2.
+## Agenten (Platzhalter)
+- A0 Orchestrator
+- A1 Intake
+- A2 Knowledge
+- A3 Retrieval
+- A4 Reasoner/Planner
+- A5 Executor
+- A6 Auditor/Governance
+
+## Nächstes
+- Zuständigkeiten je Agent (1–2 Bullets)
+- Schnittstellenmatrix (nur Namen)
