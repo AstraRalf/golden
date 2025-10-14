@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+remote="$1"; branch="$(git rev-parse --abbrev-ref HEAD)"
+if [ "$remote" = "origin" ] && [ "$branch" = "main" ] && [ "${ALLOW_MAIN_PUSH:-0}" != "1" ]; then
+  echo "❌ Direkt-Push auf origin/main blockiert. Bitte PR nutzen (oder ALLOW_MAIN_PUSH=1 setzen)." >&2
+  exit 1
+fi
+exit 0
