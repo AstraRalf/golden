@@ -1,0 +1,10 @@
+# Windows / Editor
+Thumbs.db
+Desktop.ini
+*.log
+*.tmp
+
+# Common
+node_modules/
+.env
+__pycache__/
