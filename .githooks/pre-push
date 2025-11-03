@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-set -euo pipefail
-remote="$1"; branch="$(git rev-parse --abbrev-ref HEAD)"
-if [ "$remote" = "origin" ] && [ "$branch" = "main" ] && [ "${ALLOW_MAIN_PUSH:-0}" != "1" ]; then
-  echo "❌ Direkt-Push auf origin/main blockiert. Bitte PR nutzen (oder ALLOW_MAIN_PUSH=1 setzen)." >&2
-  exit 1
-fi
+# FAB7: block direct pushes to 'main' unless ALLOW_MAIN_PUSH=1
+while read local_ref local_sha remote_ref remote_sha; do
+  if [[ "$remote_ref" == "refs/heads/main" && -z "$ALLOW_MAIN_PUSH" ]]; then
+    echo "❌ Direct pushes to 'main' are blocked. Create a PR. (set ALLOW_MAIN_PUSH=1 to override)" >&2
+    exit 1
+  fi
+done
 exit 0
