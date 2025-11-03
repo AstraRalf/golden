@@ -1,4 +1,4 @@
-# Windows / Editor
+﻿# Windows / Editor
 Thumbs.db
 Desktop.ini
 *.log
@@ -8,3 +8,17 @@ Desktop.ini
 node_modules/
 .env
 __pycache__/
+# --- FAB7 base ---
+.DS_Store
+.vscode/
+.idea/
+.history/
+.vs/
+bin/
+obj/
+# OneDrive autosave artifacts
+*~
+~$*
+# Python/node caches (falls vorhanden)
+dist/
+build/

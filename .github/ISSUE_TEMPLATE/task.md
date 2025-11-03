@@ -5,10 +5,10 @@ labels: chore
 ---
 
 **Ziel**
-…
+â€¦
 
 **Umfang**
-- [ ] …
+- [ ] â€¦
 
 **Akzeptanzkriterien**
-- [ ] …
+- [ ] â€¦

@@ -8,11 +8,11 @@ labels: bug
 Was ist das Problem?
 
 **Schritte zum Reproduzieren**
-1. …
-2. …
+1. â€¦
+2. â€¦
 
 **Erwartetes Verhalten**
-…
+â€¦
 
 **Logs/Belege**
-…
+â€¦
