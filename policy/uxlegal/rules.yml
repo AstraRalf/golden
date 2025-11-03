@@ -1,0 +1,15 @@
+version: 1
+rules:
+  - id: pii.generic
+    level: warn
+    description: Heuristik für potenzielle PII (advisory)
+    patterns:
+      - '\\bSSN\\b'
+      - '\\bKreditkarte\\b'
+      - '\\bPassport\\b'
+  - id: license.header
+    level: info
+    description: Prüfe Lizenz-Hinweis in Markdown/Code
+  - id: thirdparty.notice
+    level: info
+    description: Hinweise zu Drittinhalten dokumentieren

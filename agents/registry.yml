@@ -1,0 +1,18 @@
+agents:
+  - id: Arin
+    name: Arin
+    role: Orchestrator
+    capabilities: [orchestrate, policy_compile]
+    scopes: [repo_local]
+    owner: Arin
+  - id: Arin-S
+    name: Arin-S
+    role: Specialist
+    capabilities: [sandbox_exec, safe_ops]
+    scopes: [sandbox_only]
+    owner: Arin
+  # TODO: weitere 6 Agents + deren -S
+policies:
+  sandbox_required_for_S: true
+  network_access: off
+  audit_log_dir: logs/agents
