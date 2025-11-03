@@ -7,7 +7,6 @@ if out=$(git diff --cached --check); then
     exit 1
   fi
 else
-  # git diff --check hat Fehler → lieber abbrechen
   exit 1
 fi
 exit 0
