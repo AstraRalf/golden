@@ -1,4 +1,4 @@
-﻿# Windows / Editor
+# Windows / Editor
 Thumbs.db
 Desktop.ini
 *.log
@@ -22,3 +22,6 @@ obj/
 # Python/node caches (falls vorhanden)
 dist/
 build/
+# Backups (FAB7)
+*.bak
+*.bak.*
