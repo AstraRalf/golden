@@ -34,13 +34,17 @@ function Get-PureNE($A,$B){
 function Get-MixedNE-2x2($A,$B){
   $a11=[double]$A[0][0]; $a12=[double]$A[0][1]; $a21=[double]$A[1][0]; $a22=[double]$A[1][1]
   $b11=[double]$B[0][0]; $b12=[double]$B[0][1]; $b21=[double]$B[1][0]; $b22=[double]$B[1][1]
-  $denA = ($a11 - $a12) - ($a21 - $a22)
-  $denB = ($b11 - $b21) - ($b12 - $b22)
+
+  # Indifferenz (korrekt für 2x2)
+  $denA = (($a11 - $a21) - ($a12 - $a22))
+  $denB = (($b11 - $b12) - ($b21 - $b22))
   if([math]::Abs($denA) -lt 1e-12 -or [math]::Abs($denB) -lt 1e-12){ return $null }
+
   $q = ($a22 - $a12) / $denA
   $p = ($b22 - $b21) / $denB
+
   if($p -ge -1e-9 -and $p -le 1+1e-9 -and $q -ge -1e-9 -and $q -le 1+1e-9){
-    return @{ p=[math]::Max(0,[math]::Min(1,$p)); q=[math]::Max(0,[math]::Min(1,$q)) }
+    return @{ p=[math]::Max(0,[math]::Min(1,[double]$p)); q=[math]::Max(0,[math]::Min(1,[double]$q)) }
   }
   return $null
 }
@@ -64,6 +68,8 @@ try{
 $A = $json.payoffA; $B=$json.payoffB
 if(-not $A -or -not $B -or $A.Count -ne 2 -or $A[0].Count -ne 2){ Write-Host "[nash] erwartet 2x2 Matrizen."; exit 2 }
 
+$ic = [System.Globalization.CultureInfo]::InvariantCulture
+
 $pnes = Get-PureNE $A $B
 $hasPure = ($pnes.Count -gt 0)
 if($hasPure){
@@ -75,26 +81,25 @@ if($hasPure){
 
 $mixed = Get-MixedNE-2x2 $A $B
 if($mixed){
-  Write-Host ("[nash] Mixed NE: p(A0)={0:N3}, q(B0)={1:N3}" -f $mixed.p, $mixed.q)
+  $msg = [string]::Format($ic, "[nash] Mixed NE: p(A0)={0:N3}, q(B0)={1:N3}", $mixed.p, $mixed.q)
+  Write-Host $msg
 }else{
   Write-Host "[nash] Kein Mixed NE ableitbar."
 }
 
 if($ReportPoA){
-  # best social welfare over all outcomes
   $best=[double]::NegativeInfinity
   for($i=0;$i -lt 2;$i++){ for($j=0;$j -lt 2;$j++){ $w = Welfare $A $B $i $j; if($w -gt $best){ $best=$w } } }
   $neWelfares=@()
-  if($hasPure){
-    foreach($ne in $pnes){ $neWelfares += (Welfare $A $B $ne[0] $ne[1]) }
-  }
+  if($hasPure){ foreach($ne in $pnes){ $neWelfares += (Welfare $A $B $ne[0] $ne[1]) } }
   if($mixed){ $neWelfares += (WelfareMixed $A $B $mixed.p $mixed.q) }
   if($neWelfares.Count -gt 0 -and $best -gt 1e-12){
     $worstNE = ($neWelfares | Measure-Object -Minimum).Minimum
     $poa = $worstNE / $best
-    Write-Host ("[nash] PoA (worst NE / optimum) = {0:N3}  (worstNE={1:N3}, optimum={2:N3})" -f $poa, $worstNE, $best)
+    $msg2 = [string]::Format($ic, "[nash] PoA (worst NE / optimum) = {0:N3}  (worstNE={1:N3}, optimum={2:N3})", $poa, $worstNE, $best)
+    Write-Host $msg2
   } else {
-    Write-Host "[nash] PoA nicht definiert (kein NE oder Optimum≈0)."
+    Write-Host "[nash] PoA nicht definiert (kein NE oder Optimum~0)."
   }
 }
 
