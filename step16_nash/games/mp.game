@@ -1,0 +1,9 @@
+# Matching Pennies (zero-sum)
+players: A,B
+A: H,T
+B: H,T
+payoffs:
+  H,H: (1,-1)
+  H,T: (-1,1)
+  T,H: (-1,1)
+  T,T: (1,-1)
