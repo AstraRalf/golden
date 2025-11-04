@@ -1,0 +1,9 @@
+# Koordinationsspiel mit 2 pure NE
+players: A,B
+A: U,D
+B: L,R
+payoffs:
+  U,L: (4,4)
+  U,R: (0,0)
+  D,L: (0,0)
+  D,R: (2,2)
