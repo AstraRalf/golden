@@ -1,12 +1,12 @@
-# John-Nash-Proben (2x2, Normalform)
-Ziel: deterministische Spieltheorie-Checks ohne Netz.
-Abgedeckt:
-- Pure Nash Equilibria (PNE) für 2x2
-- Mixed NE (falls kein PNE; 2x2-Formel)
-- Hinweise: Pareto-Dominanz, Preis der Anarchie (PoA) – informativ
+# John-Nash-Proben (2x2)
+Abgedeckt: Pure NE (PNE), Mixed NE (2x2-Formel), Hinweise zu Pareto/PoA (informativ).
+Dateien:
+- sandbox/tools/nash_eval.ps1
+- sandbox/fixtures/nash/2x2_prisoners.json
+- sandbox/fixtures/nash/2x2_matching_pennies.json
+- sandbox/fixtures/nash/2x2_stag_hunt.json
+- sandbox/scenarios/nash_prisoners.yml
+- sandbox/scenarios/nash_matching_pennies.yml
+- sandbox/scenarios/nash_stag_hunt.yml
 
-Nutzung mit Szenarien-DSL (Textform):
-name: nash-prisoners
-steps:
-  - run: pwsh -NoLogo -File sandbox/tools/nash_eval.ps1 -Path sandbox/fixtures/nash/2x2_prisoners.json -AnyNE
-    expect: 0
+Hinweis (lokal PS5.1): Falls `pwsh` fehlt, temporär mit Runner die Befehle auf `powershell` mappen (CI nutzt pwsh).
