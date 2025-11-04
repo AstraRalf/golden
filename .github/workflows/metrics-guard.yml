@@ -1,0 +1,30 @@
+name: Metrics Guard (Step16)
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/step16-nash.yml"
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check label for metrics expectation changes
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          pr="${{ github.event.pull_request.number }}"
+          gh pr diff "$pr" -- .github/workflows/step16-nash.yml > diff.txt
+          if grep -E "PoA_(util|cost) expected|should be null" diff.txt >/dev/null; then
+            labels=$(gh pr view "$pr" --json labels --jq '.labels[].name' || true)
+            echo "Labels on PR: $labels"
+            if ! echo "$labels" | grep -Fx "metrics-update" >/dev/null; then
+              echo "::error::Metrics expectations changed but PR lacks 'metrics-update' label."
+              echo "Add the 'metrics-update' label or revert the change."
+              exit 1
+            fi
+          fi
+          echo "No guarded changes or 'metrics-update' label present — OK."
