@@ -1,0 +1,4 @@
+name: sandbox-smoke
+steps:
+  - run: pwsh -NoLogo -File sandbox/harness/smoke.ps1
+    expect: 0

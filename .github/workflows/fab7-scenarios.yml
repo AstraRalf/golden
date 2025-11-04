@@ -1,0 +1,14 @@
+name: FAB7 Scenarios
+on:
+  pull_request:
+    branches: [ main ]
+jobs:
+  scenarios:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run Scenario DSL
+        shell: pwsh
+        run: pwsh -NoLogo -File sandbox/harness/run_scenarios.ps1
