@@ -24,4 +24,5 @@ dist/
 build/
 # Backups (FAB7)
 *.bak
-*.bak.*
+*.bak.*step16_nash/ci_out/
+step16_nash/ci_out_latest/
