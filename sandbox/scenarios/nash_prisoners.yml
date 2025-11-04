@@ -1,4 +1,4 @@
 name: nash-prisoners
 steps:
-  - run: pwsh -NoLogo -File sandbox/tools/nash_eval.ps1 -Path sandbox/fixtures/nash/2x2_prisoners.json -AnyNE
+  - run: pwsh -NoLogo -File sandbox/tools/nash_eval.ps1 -Path sandbox/fixtures/nash/2x2_prisoners.json -AnyNE -ReportPoA
     expect: 0

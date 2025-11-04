@@ -2,7 +2,8 @@ Param(
   [Parameter(Mandatory=$true)][string]$Path,
   [switch]$AnyNE,
   [switch]$PureNE,
-  [switch]$ComputeMixed
+  [switch]$ComputeMixed,
+  [switch]$ReportPoA
 )
 $ErrorActionPreference="Stop"
 if(-not ($AnyNE -or $PureNE -or $ComputeMixed)){ $AnyNE=$true }
@@ -44,29 +45,57 @@ function Get-MixedNE-2x2($A,$B){
   return $null
 }
 
+function Welfare([double[][]]$A,[double[][]]$B,[int]$i,[int]$j){ return [double]$A[$i][$j] + [double]$B[$i][$j] }
+
+function WelfareMixed([double[][]]$A,[double[][]]$B,[double]$p,[double]$q){
+  $a11=[double]$A[0][0]; $a12=[double]$A[0][1]; $a21=[double]$A[1][0]; $a22=[double]$A[1][1]
+  $b11=[double]$B[0][0]; $b12=[double]$B[0][1]; $b21=[double]$B[1][0]; $b22=[double]$B[1][1]
+  $wA = $p*$q*$a11 + $p*(1-$q)*$a12 + (1-$p)*$q*$a21 + (1-$p)*(1-$q)*$a22
+  $wB = $p*$q*$b11 + $p*(1-$q)*$b12 + (1-$p)*$q*$b21 + (1-$p)*(1-$q)*$b22
+  return $wA + $wB
+}
+
 try{
   $json = Get-Content -Raw -Encoding UTF8 -LiteralPath $Path | ConvertFrom-Json
 } catch {
-  Write-Host "[nash] Konnte JSON nicht lesen: $Path" -ForegroundColor Yellow
+  Write-Host "[nash] Konnte JSON nicht lesen: $Path"
   exit 2
 }
 $A = $json.payoffA; $B=$json.payoffB
-if(-not $A -or -not $B -or $A.Count -ne 2 -or $A[0].Count -ne 2){ Write-Host "[nash] erwartet 2x2 Matrizen." -ForegroundColor Yellow; exit 2 }
+if(-not $A -or -not $B -or $A.Count -ne 2 -or $A[0].Count -ne 2){ Write-Host "[nash] erwartet 2x2 Matrizen."; exit 2 }
 
 $pnes = Get-PureNE $A $B
 $hasPure = ($pnes.Count -gt 0)
 if($hasPure){
   $list = ($pnes | ForEach-Object { "($($_[0]),$($_[1]))" }) -join ", "
-  Write-Host "[nash] Pure NE: $list" -ForegroundColor Green
-} else {
-  Write-Host "[nash] Kein Pure NE gefunden." -ForegroundColor Yellow
+  Write-Host "[nash] Pure NE: $list"
+}else{
+  Write-Host "[nash] Kein Pure NE gefunden."
 }
 
 $mixed = Get-MixedNE-2x2 $A $B
 if($mixed){
-  Write-Host ("[nash] Mixed NE: p(A0)={0:N3}, q(B0)={1:N3}" -f $mixed.p, $mixed.q) -ForegroundColor Green
+  Write-Host ("[nash] Mixed NE: p(A0)={0:N3}, q(B0)={1:N3}" -f $mixed.p, $mixed.q)
 }else{
-  Write-Host "[nash] Kein Mixed NE ableitbar." -ForegroundColor Yellow
+  Write-Host "[nash] Kein Mixed NE ableitbar."
+}
+
+if($ReportPoA){
+  # best social welfare over all outcomes
+  $best=[double]::NegativeInfinity
+  for($i=0;$i -lt 2;$i++){ for($j=0;$j -lt 2;$j++){ $w = Welfare $A $B $i $j; if($w -gt $best){ $best=$w } } }
+  $neWelfares=@()
+  if($hasPure){
+    foreach($ne in $pnes){ $neWelfares += (Welfare $A $B $ne[0] $ne[1]) }
+  }
+  if($mixed){ $neWelfares += (WelfareMixed $A $B $mixed.p $mixed.q) }
+  if($neWelfares.Count -gt 0 -and $best -gt 1e-12){
+    $worstNE = ($neWelfares | Measure-Object -Minimum).Minimum
+    $poa = $worstNE / $best
+    Write-Host ("[nash] PoA (worst NE / optimum) = {0:N3}  (worstNE={1:N3}, optimum={2:N3})" -f $poa, $worstNE, $best)
+  } else {
+    Write-Host "[nash] PoA nicht definiert (kein NE oder Optimum≈0)."
+  }
 }
 
 if($PureNE){ if($hasPure){ exit 0 } else { exit 1 } }
