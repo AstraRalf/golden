@@ -1,0 +1,7 @@
+{
+  "name": "PrisonersDilemma",
+  "players": ["A","B"],
+  "strategies": { "A": ["C","D"], "B": ["C","D"] },
+  "payoffA": [[-1, -3],[ 0, -2]],
+  "payoffB": [[-1,  0],[-3, -2]]
+}
