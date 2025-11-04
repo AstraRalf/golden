@@ -20,3 +20,6 @@ jobs:
       - name: Sandbox smoke
         shell: pwsh
         run: pwsh -NoLogo -File sandbox/harness/smoke.ps1
+      - name: Scenario DSL runner (Nash + others)
+        shell: pwsh
+        run: pwsh -NoLogo -File sandbox/harness/run_scenarios.ps1
