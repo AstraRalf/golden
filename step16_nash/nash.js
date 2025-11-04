@@ -158,7 +158,7 @@ function printJSON(r){
     worstEQ: r.worst ? { at: r.worst.at, label: r.worst.label, [aggName]: r.worst.AGG } : null,
     metric: { mode: r.mode, name: aggName, PoA: r.PoA }
   };
-  console.log(JSON.stringify(out));
+  const _round=(k,v)=>typeof v==="number"?Number(v.toFixed(6)):v; console.log(JSON.stringify(out,_round));
 }
 
 function main(){
