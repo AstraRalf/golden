@@ -1,0 +1,55 @@
+name: Step16 Nash Runner
+
+on:
+  pull_request:
+    paths:
+      - "step16_nash/**"
+      - ".github/workflows/step16-nash.yml"
+  push:
+    branches: [ feat/step16-nash-runner ]
+    paths:
+      - "step16_nash/**"
+      - ".github/workflows/step16-nash.yml"
+
+jobs:
+  nash:
+    name: 2x2 Nash checks (util PoA) + artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+
+      - name: Node version
+        run: node -v
+
+      - name: Run games (text + JSON)
+        run: |
+          set -e
+          cd step16_nash
+          mkdir -p out
+          for f in games/*.game; do
+            base=$(basename "$f" .game)
+            node nash.js "$f" --json > "out/${base}.json"
+            node nash.js "$f" > "out/${base}.txt"
+          done
+
+      - name: Assert PoA (util) expectations
+        run: |
+          set -e
+          cd step16_nash/out
+          node -e "let j=require('./pd.json');   if (Math.abs((j.metric.PoA ?? -1)-3)>1e-9)  {console.error('PD PoA expected 3');     process.exit(1)}"
+          node -e "let j=require('./bos.json');  if (Math.abs((j.metric.PoA ?? -1)-2.25)>1e-9){console.error('BoS PoA expected 2.25'); process.exit(1)}"
+          node -e "let j=require('./stag.json'); if (Math.abs((j.metric.PoA ?? -1)-2)>1e-9)   {console.error('Stag PoA expected 2');   process.exit(1)}"
+          node -e "let j=require('./mp.json');   if (j.metric.PoA!=null)                     {console.error('MP PoA should be null'); process.exit(1)}"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: step16-nash-out
+          path: step16_nash/out
+          if-no-files-found: error
