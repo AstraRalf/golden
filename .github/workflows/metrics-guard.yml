@@ -2,29 +2,57 @@ name: Metrics Guard (Step16)
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled, edited]
     paths:
       - ".github/workflows/step16-nash.yml"
+
+permissions:
+  contents: read
+  pull-requests: read
 
 jobs:
   guard:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Check label for metrics expectation changes
-        if: ${{ github.event_name == 'pull_request' }}
-        env:
-          GH_TOKEN: ${{ github.token }}
+        with:
+          fetch-depth: 2
+
+      # Prüfe, ob sich die erwarteten Metrik-Zeilen im step16-Workflow geändert haben
+      - id: diff
+        name: Detect expectation changes in step16-nash.yml
+        shell: bash
         run: |
           set -e
-          pr="${{ github.event.pull_request.number }}"
-          gh pr diff "$pr" -- .github/workflows/step16-nash.yml > diff.txt
-          if grep -E "PoA_(util|cost) expected|should be null" diff.txt >/dev/null; then
-            labels=$(gh pr view "$pr" --json labels --jq '.labels[].name' || true)
-            echo "Labels on PR: $labels"
-            if ! echo "$labels" | grep -Fx "metrics-update" >/dev/null; then
-              echo "::error::Metrics expectations changed but PR lacks 'metrics-update' label."
-              echo "Add the 'metrics-update' label or revert the change."
-              exit 1
-            fi
+          file=".github/workflows/step16-nash.yml"
+          if ! git rev-parse HEAD^ >/dev/null 2>&1; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            exit 0
           fi
-          echo "No guarded changes or 'metrics-update' label present — OK."
+          if git diff -U0 HEAD^ HEAD -- "$file" | grep -E "PoA_(util|cost) expected|should be null" >/dev/null; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      # Labels direkt aus dem Event-Kontext (ohne gh)
+      - id: labels
+        name: Read labels from PR event
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const labels = (context.payload.pull_request?.labels || []).map(l => l.name);
+            core.info(`Labels: ${labels.join(', ')}`);
+            core.setOutput('labels', labels.join('\n'));
+
+      - name: Show diagnostics
+        run: |
+          echo "changed=${{ steps.diff.outputs.changed }}"
+          printf "labels:\n%s\n" "${{ steps.labels.outputs.labels }}"
+
+      # Fail NUR wenn Metrik-Erwartungen geändert wurden UND das Label fehlt
+      - name: Enforce metrics-update label
+        if: ${{ steps.diff.outputs.changed == 'true' && !contains(steps.labels.outputs.labels, 'metrics-update') }}
+        run: |
+          echo "::error::Metrics expectations changed but PR lacks 'metrics-update' label."
+          exit 1
