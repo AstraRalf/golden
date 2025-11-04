@@ -13,7 +13,7 @@ on:
 
 jobs:
   nash:
-    name: 2x2 Nash checks (util PoA) + artifacts
+    name: 2x2 Nash checks (util+cost) + artifacts
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,7 +27,7 @@ jobs:
       - name: Node version
         run: node -v
 
-      - name: Run games (text + JSON)
+      - name: Run games (text + JSON util+cost)
         run: |
           set -e
           cd step16_nash
@@ -35,6 +35,7 @@ jobs:
           for f in games/*.game; do
             base=$(basename "$f" .game)
             node nash.js "$f" --json > "out/${base}.json"
+            node nash.js "$f" --json --poa cost > "out/${base}.cost.json"
             node nash.js "$f" > "out/${base}.txt"
           done
 
@@ -42,10 +43,19 @@ jobs:
         run: |
           set -e
           cd step16_nash/out
-          node -e "let j=require('./pd.json');   if (Math.abs((j.metric.PoA ?? -1)-3)>1e-9)  {console.error('PD PoA expected 3');     process.exit(1)}"
-          node -e "let j=require('./bos.json');  if (Math.abs((j.metric.PoA ?? -1)-2.25)>1e-9){console.error('BoS PoA expected 2.25'); process.exit(1)}"
-          node -e "let j=require('./stag.json'); if (Math.abs((j.metric.PoA ?? -1)-2)>1e-9)   {console.error('Stag PoA expected 2');   process.exit(1)}"
-          node -e "let j=require('./mp.json');   if (j.metric.PoA!=null)                     {console.error('MP PoA should be null'); process.exit(1)}"
+          node -e "let j=require('./pd.json');   if (Math.abs((j.metric.PoA ?? -1)-3)>1e-9)  {console.error('PD PoA_util expected 3');     process.exit(1)}"
+          node -e "let j=require('./bos.json');  if (Math.abs((j.metric.PoA ?? -1)-2.25)>1e-9){console.error('BoS PoA_util expected 2.25'); process.exit(1)}"
+          node -e "let j=require('./stag.json'); if (Math.abs((j.metric.PoA ?? -1)-2)>1e-9)   {console.error('Stag PoA_util expected 2');   process.exit(1)}"
+          node -e "let j=require('./mp.json');   if (j.metric.PoA!=null)                     {console.error('MP PoA_util should be null'); process.exit(1)}"
+
+      - name: Assert PoA (cost) expectations
+        run: |
+          set -e
+          cd step16_nash/out
+          node -e "let j=require('./pd.cost.json');   if (Math.abs((j.metric.PoA ?? -1)-1)>1e-9)  {console.error('PD PoA_cost expected 1');   process.exit(1)}"
+          node -e "let j=require('./stag.cost.json'); if (Math.abs((j.metric.PoA ?? -1)-2)>1e-9)  {console.error('Stag PoA_cost expected 2'); process.exit(1)}"
+          node -e "let j=require('./bos.cost.json');  if (j.metric.PoA!=null)                    {console.error('BoS PoA_cost should be null'); process.exit(1)}"
+          node -e "let j=require('./mp.cost.json');   if (j.metric.PoA!=null)                    {console.error('MP PoA_cost should be null'); process.exit(1)}"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
