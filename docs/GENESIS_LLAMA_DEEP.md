@@ -41,8 +41,8 @@
 ## 5) Sandbox & Szenarien
 - **Harness**: sandbox/harness/smoke.ps1 (deterministisch), Fixtures in sandbox/fixtures/.
 - **Szenarien**: definieren als einfache YAML/Markdown-Rezepte (Inputs, erwartete Checks, Exit-Codes).
-- **NAS/Nas-Test**: _Platzhalter_ → in Genesis genutzt; in Llama als **Negative/Adversarial/Safety**-Test interpretieren (finale Benennung offen).
-  Vorschlag: „NAS-Test“ = **N**egative/**A**dversarial/**S**afety-Probe gegen Policies & Hooks (ohne Netz).
+- **Nash/Nash-Test**: _Platzhalter_ → in Genesis genutzt; in Llama als **Negative/Adversarial/Safety**-Test interpretieren (finale Benennung offen).
+  Vorschlag: „Nash-Test“ = **N**egative/**A**dversarial/**S**afety-Probe gegen Policies & Hooks (ohne Netz).
 
 ## 6) Juristische Prüffunktion (UXLegal)
 - **Ziel**: Hinweise (advisory) früh, nicht blockierend lokal; in CI optional strengere Gates.
@@ -81,7 +81,7 @@
 7) Onboarding-README (Kurz) + Cheatsheet (CLI/PR-Flow).
 
 ## 10) Offene Punkte zur FAB7-Abstimmung
-- NAS/Nas-Test: endgültige Definition/Scope.
+- Nash/Nash-Test: endgültige Definition/Scope.
 - Vollständige sieben Rollen: Bezeichnungen/Capabilities/Owner.
 - Policy-Schärfe in CI: was warn vs. required?
 - Spezial-Szenarien (rechtliche Edge-Cases, Daten-Maskierung).
