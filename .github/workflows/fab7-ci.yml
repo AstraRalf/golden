@@ -1,0 +1,24 @@
+name: FAB7 CI
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint_and_smoke:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Whitespace/EOL check (diff-only, non-fatal)
+        shell: pwsh
+        run: |
+          git fetch origin ${{ github.base_ref }} --depth=1
+          git --no-pager diff --check origin/${{ github.base_ref }}...HEAD; exit 0
+      - name: UXLegal advisory lint (diff-only)
+        shell: pwsh
+        run: pwsh -NoLogo -File policy/uxlegal/ci_lint.ps1
+      - name: Sandbox smoke
+        shell: pwsh
+        run: pwsh -NoLogo -File sandbox/harness/smoke.ps1

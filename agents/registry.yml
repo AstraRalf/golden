@@ -11,7 +11,85 @@ agents:
     capabilities: [sandbox_exec, safe_ops]
     scopes: [sandbox_only]
     owner: Arin
-  # TODO: weitere 6 Agents + deren -S
+
+  - id: A2
+    name: Architect
+    role: Architecture
+    capabilities: [design, adr_author]
+    scopes: [repo_local]
+    owner: A2
+  - id: A2-S
+    name: Architect-S
+    role: Specialist
+    capabilities: [sandbox_exec]
+    scopes: [sandbox_only]
+    owner: A2
+
+  - id: A3
+    name: Builder
+    role: Implementation
+    capabilities: [scaffold, codegen]
+    scopes: [repo_local]
+    owner: A3
+  - id: A3-S
+    name: Builder-S
+    role: Specialist
+    capabilities: [sandbox_exec]
+    scopes: [sandbox_only]
+    owner: A3
+
+  - id: A4
+    name: Reviewer
+    role: Review
+    capabilities: [lint, uxlegal, policy_review]
+    scopes: [repo_local]
+    owner: A4
+  - id: A4-S
+    name: Reviewer-S
+    role: Specialist
+    capabilities: [sandbox_exec]
+    scopes: [sandbox_only]
+    owner: A4
+
+  - id: A5
+    name: Ops
+    role: Operations
+    capabilities: [ci, hooks, healthcheck]
+    scopes: [repo_local]
+    owner: A5
+  - id: A5-S
+    name: Ops-S
+    role: Specialist
+    capabilities: [sandbox_exec]
+    scopes: [sandbox_only]
+    owner: A5
+
+  - id: A6
+    name: QA
+    role: Quality
+    capabilities: [eval, scenarios]
+    scopes: [repo_local]
+    owner: A6
+  - id: A6-S
+    name: QA-S
+    role: Specialist
+    capabilities: [sandbox_exec]
+    scopes: [sandbox_only]
+    owner: A6
+
+  - id: A7
+    name: Research
+    role: Research
+    capabilities: [investigate, benchmarks]
+    scopes: [repo_local]
+    owner: A7
+  - id: A7-S
+    name: Research-S
+    role: Specialist
+    capabilities: [sandbox_exec]
+    scopes: [sandbox_only]
+    owner: A7
+
 policies:
   sandbox_required_for_S: true
   network_access: off
