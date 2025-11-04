@@ -1,15 +1,34 @@
-version: 1
+version: 2
 rules:
-  - id: pii.generic
+  - id: pii.email
     level: warn
-    description: Heuristik für potenzielle PII (advisory)
-    patterns:
-      - '\\bSSN\\b'
-      - '\\bKreditkarte\\b'
-      - '\\bPassport\\b'
+    description: E-Mail-Adressen Heuristik
+    patterns: [ '\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b' ]
+
+  - id: pii.iban.de
+    level: warn
+    description: IBAN Deutschland (heuristisch)
+    patterns: [ '\bDE\d{20}\b' ]
+
+  - id: pii.cc
+    level: warn
+    description: Kreditkarten-Nummern (Luhn-valid, 13-19 Stellen)
+    patterns: [ 'cc-luhn' ]  # Sonderbehandlung im Linter
+
+  - id: secrets.aws_access_key
+    level: warn
+    description: AWS Access Key ID
+    patterns: [ '\bAKIA[0-9A-Z]{16}\b' ]
+
+  - id: secrets.private_key
+    level: warn
+    description: Private-Key Marker
+    patterns: [ '-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----' ]
+
   - id: license.header
     level: info
-    description: Prüfe Lizenz-Hinweis in Markdown/Code
+    description: Lizenz-/Header-Hinweis in Code/Markdown empfohlen
+
   - id: thirdparty.notice
     level: info
     description: Hinweise zu Drittinhalten dokumentieren
