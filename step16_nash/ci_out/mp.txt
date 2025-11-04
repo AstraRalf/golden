@@ -1,0 +1,14 @@
+Players: A (A) vs B (B)
+Strategies A: H, T | B: H, T
+
+Payoffs & SW:
+  H,H       -> (A:1, B:-1), SW=0
+  H,T       -> (A:-1, B:1), SW=0
+  T,H       -> (A:-1, B:1), SW=0
+  T,T       -> (A:1, B:-1), SW=0
+
+OPT: H,H with SW=0
+Pure NE: none
+Mixed NE: p(A=H)=0.5, q(B=H)=0.5  -> E[SW]=0 (A:0, B:0)
+
+PoA_util = n/a (OPT=0, worst_EQ_SW=0)
