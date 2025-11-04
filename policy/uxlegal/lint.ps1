@@ -1,25 +1,15 @@
-\Stop='Stop'
-function Get-StagedFiles {
-  (git diff --name-only --cached) -split \"
-\" | Where-Object { \ -and (Test-Path \) }
+$ErrorActionPreference="Stop"
+function Get-StagedFiles { (git diff --name-only --cached) -split "`n" | Where-Object { $_ -and (Test-Path $_) } }
+. "$PSScriptRoot\ci_lint.ps1"  # Re-use Functions (Get-ChangedFiles wird ignoriert)
+# Minimaler Adapter: staged Files statt diff-range
+$files = Get-StagedFiles
+$waivers = Load-Waivers "docs/audit/WAIVER-UXLEGAL.yml"
+$all=@()
+foreach($f in $files){
+  if((Get-Item $f).PSIsContainer){ continue }
+  try{ $t=[IO.File]::ReadAllText($f) }catch{ continue }
+  $hits=Match-Rules $t $f
+  foreach($h in $hits){ if(-not (Is-Waived $h.id $h.file $waivers)){ $all += ("[{0}] {1} - {2}" -f $h.id,$h.file,$h.detail) } }
 }
-function Match-Rules([string]\){
-  \=@(); if(\ -match 'SSN|Kreditkarte|Passport'){ \ += 'pii.generic' }
-  return \
-}
-\ = Get-StagedFiles
-\=@()
-foreach(\ in \){
-  if((Get-Item \).PSIsContainer){ continue }
-  try{ \ = [IO.File]::ReadAllText(\) } catch { continue }
-  \ = Match-Rules \
-  foreach(\ in \){ \ += \"[\] \\" }
-}
-if(\.Count -gt 0){
-  Write-Warning 'UXLegal Hinweise (advisory):'
-  \ | ForEach-Object { Write-Host \" - \\" }
-  exit 0
-} else {
-  Write-Host 'UXLegal: keine Hinweise.'
-  exit 0
-}
+if($all.Count -gt 0){ Write-Warning "UXLegal (advisory, staged):"; $all | Sort-Object | ForEach-Object{ Write-Host " - $_" } } else { Write-Host "UXLegal: keine Hinweise." }
+exit 0
