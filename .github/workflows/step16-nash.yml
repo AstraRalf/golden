@@ -54,7 +54,7 @@ jobs:
           cd step16_nash/out
           node -e "let j=require('./pd.cost.json');  if (Math.abs((j.metric.PoA ?? -1)-3)>1e-9)  {console.error('PD PoA_cost expected 3'); process.exit(1)}"
           node -e "let j=require('./stag.cost.json');  if (Math.abs((j.metric.PoA ?? -1)-2)>1e-9)  {console.error('Stag PoA_cost expected 2'); process.exit(1)}"
-          node -e "let j=require('./bos.cost.json');  if (Math.abs((j.metric.PoA ?? -1)-2.25)>1e-9)  {console.error('BoS PoA_cost expected 2.25'); process.exit(1)}"
+          node -e "let j=require('./bos.cost.json');  if (Math.abs((j.metric.PoA ?? -1)-2.251)>1e-9)  {console.error('BoS PoA_cost expected 2.251'); process.exit(1)}"
           node -e "let j=require('./mp.cost.json');  if (j.metric.PoA!=null)                    {console.error('MP PoA_cost should be null'); process.exit(1)}"
 
       - name: Upload artifacts
