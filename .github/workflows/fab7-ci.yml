@@ -24,9 +24,15 @@ jobs:
       - name: Scenario DSL runner (Nash + others)
         shell: pwsh
         run: pwsh -NoLogo -File sandbox/harness/run_scenarios.ps1
-
       - name: Capture Step Summary
         if: always()
+        shell: pwsh
+        run: |
+          if (Test-Path \) {
+            Copy-Item -LiteralPath \ -Destination scenario-summary.md -Force
+          } else {
+            "" | Out-File -FilePath scenario-summary.md -Encoding utf8
+          }        if: always()
         shell: bash
         run: |
           cp "\" scenario-summary.md || true
