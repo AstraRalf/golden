@@ -32,27 +32,4 @@ jobs:
             Copy-Item -LiteralPath \ -Destination scenario-summary.md -Force
           } else {
             "" | Out-File -FilePath scenario-summary.md -Encoding utf8
-          }        if: always()
-        shell: bash
-        run: |
-          cp "\" scenario-summary.md || true
-
-      - name: Upload Scenario Summary
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: scenario-summary
-          path: scenario-summary.md
-          if-no-files-found: warn
-          retention-days: 14
-
-      - name: Upload Nash Outputs (optional)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: nash-outputs
-          path: |
-            step16_nash/ci_out_latest/*.txt
-            step16_nash/ci_out_latest/*.json
-          if-no-files-found: ignore
-          retention-days: 14
+          }
