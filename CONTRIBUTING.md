@@ -1,3 +1,9 @@
+# Qualität > Schnelligkeit (hart)
+
+- Grundsatzregel für dieses Repo: **Qualität hat Vorrang vor Tempo**.
+- Metrik-Erwartungen dürfen nur via PR mit Label **\metrics-update\** geändert werden (Guard prüft das).
+- FAB7-Entscheidungen werden dokumentiert (siehe PR-Diskussionen).
+
 # Beitragsrichtlinien
 
 - Commits: **Conventional Commits** (z. B. \eat:\, \ix:\, \chore:\)

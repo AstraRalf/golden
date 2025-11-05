@@ -1,0 +1,10 @@
+name: Stag Hunt (util)
+type: util
+players: A,B
+A: Stag,Hare
+B: Stag,Hare
+payoffs:
+  Stag,Stag: 4,4
+  Stag,Hare: 0,3
+  Hare,Stag: 3,0
+  Hare,Hare: 3,3

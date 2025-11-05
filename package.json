@@ -1,0 +1,8 @@
+{
+  "name": "golden",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "step16:run": "node step16_nash/run.js step16_nash/examples step16_nash/ci_out_latest"
+  }
+}

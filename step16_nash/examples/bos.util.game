@@ -1,0 +1,10 @@
+name: BoS (util)
+type: util
+players: A,B
+A: Opera,Football
+B: Opera,Football
+payoffs:
+  Opera,Opera: 3,2
+  Opera,Football: 0,0
+  Football,Opera: 0,0
+  Football,Football: 2,3
