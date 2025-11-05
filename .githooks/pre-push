@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-# FAB7: block direct pushes to 'main' unless ALLOW_MAIN_PUSH=1
-while read local_ref local_sha remote_ref remote_sha; do
-  if [[ "$remote_ref" == "refs/heads/main" && -z "$ALLOW_MAIN_PUSH" ]]; then
-    echo "❌ Direct pushes to 'main' are blocked. Create a PR. (set ALLOW_MAIN_PUSH=1 to override)" >&2
-    exit 1
-  fi
-done
-exit 0

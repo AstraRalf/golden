@@ -1,7 +1,0 @@
-# Waiver-Liste für UXLegal (nur für CI-Ausgabeunterdrückung; keine Freigabe von Policy-Verstößen)
-# Eintrag-Felder:
-# - id: <rule-id>
-#   file: <relativer Pfad oder Wildcard>
-#   reason: <kurze Begründung>
-#   expires: YYYY-MM-DD   # optional
-waivers: []

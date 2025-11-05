@@ -1,0 +1,55 @@
+{
+  "version": "rv0.1.2-21-g09d38fd-dirty",
+  "created_utc": "2025-11-05T19:24:11.2680951Z",
+  "source_dir": "C:\\Users\\ralfb\\golden\\artifacts\\19111817680-20251105-193437\\nash-outputs",
+  "files": [
+    {
+      "name": "ScenarioSummary.html",
+      "size_bytes": 2868,
+      "sha256": "a445526c4ddbd2c3ec589550cb45f6838be1d5453e9b3d073a02b6b14e22407a",
+      "modified_utc": "2025-11-05T18:53:26.5108851Z"
+    },
+    {
+      "name": "ScenarioSummary.md",
+      "size_bytes": 194,
+      "sha256": "11010fd899121ed38375973fed06d96f35164ace354b1820bf396f1bf02d17b6",
+      "modified_utc": "2025-11-05T18:50:26.6645613Z"
+    },
+    {
+      "name": "ScenarioSummary.csv",
+      "size_bytes": 177,
+      "sha256": "bc9543d16d0c22aa718ce5e7c50ce0db1e9af5f2b73ed64a0b3a1f97605bca52",
+      "modified_utc": "2025-11-05T18:50:26.7107855Z"
+    },
+    {
+      "name": "ScenarioSummary.json",
+      "size_bytes": 422,
+      "sha256": "7930ba12ec6af34a4f9df0b57e1c33d4aa935c8fe8366046ba34ff88a0babf4b",
+      "modified_utc": "2025-11-05T18:50:26.7610642Z"
+    },
+    {
+      "name": "ScenarioSummary.manifest.json",
+      "size_bytes": 1664,
+      "sha256": "e03d83358d3563972290c518874b2852cbfea40d13640d487206448b6aa9981f",
+      "modified_utc": "2025-11-05T19:13:57.8001406Z"
+    },
+    {
+      "name": "MANIFEST.txt",
+      "size_bytes": 613,
+      "sha256": "ebe9b413f86089e4cfbc6be8f26377d376dfb8006addbd5054f0f3fd17ddbb2b",
+      "modified_utc": "2025-11-05T19:13:57.9300906Z"
+    },
+    {
+      "name": "ScenarioSummary.bundle.zip",
+      "size_bytes": 3152,
+      "sha256": "08be03b63237ef453e7445ae83ca6bf03fefe0beaafacee2ab11132fa438807c",
+      "modified_utc": "2025-11-05T19:16:03.9674448Z"
+    },
+    {
+      "name": "ScenarioSummary.bundle.zip.sha256",
+      "size_bytes": 92,
+      "sha256": "5d774b0402e47f6efe5ad93e774d18c4fe260554d15285d6e59368debf028d21",
+      "modified_utc": "2025-11-05T19:16:04.0633413Z"
+    }
+  ]
+}

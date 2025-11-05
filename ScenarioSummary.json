@@ -1,0 +1,26 @@
+[
+  {
+    "Scenario": "battle_of_sexes",
+    "NE": "Pure",
+    "PoA": "?",
+    "Source": "json"
+  },
+  {
+    "Scenario": "matching_pennies",
+    "NE": "Pure",
+    "PoA": "?",
+    "Source": "json"
+  },
+  {
+    "Scenario": "prisoners_dilemma",
+    "NE": "Pure",
+    "PoA": "?",
+    "Source": "json"
+  },
+  {
+    "Scenario": "stag_hunt",
+    "NE": "Pure",
+    "PoA": "?",
+    "Source": "json"
+  }
+]

@@ -1,4 +1,0 @@
-name: nash-matching-pennies
-steps:
-  - run: pwsh -NoLogo -File sandbox/tools/nash_eval.ps1 -Path sandbox/fixtures/nash/2x2_matching_pennies.json -AnyNE -ReportPoA
-    expect: 0

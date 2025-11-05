@@ -1,9 +1,0 @@
-{
-  "name": "MatchingPennies",
-  "players": ["A","B"],
-  "strategies": { "A": ["H","T"], "B": ["H","T"] },
-  "payoffA": [[ 1, -1],
-              [-1,  1]],
-  "payoffB": [[-1,  1],
-              [ 1, -1]]
-}

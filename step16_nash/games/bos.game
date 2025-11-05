@@ -1,9 +1,0 @@
-# Battle of the Sexes
-players: A,B
-A: O,F
-B: O,F
-payoffs:
-  O,O: (2,1)
-  O,F: (0,0)
-  F,O: (0,0)
-  F,F: (1,2)

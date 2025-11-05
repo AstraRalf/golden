@@ -1,0 +1,41 @@
+﻿{
+  "schema_version": "1.0",
+  "generated_utc": "2025-11-05T19:13:57.7755523Z",
+  "host": "LAPTOPRALF",
+  "artifact_dir": "C:\\Users\\ralfb\\golden\\artifacts\\19111817680-20251105-193437\\nash-outputs",
+  "counts": {
+    "scenarios": 4,
+    "missing_ne": 0,
+    "missing_poa": 4
+  },
+  "files": [
+    {
+      "name": "ScenarioSummary.md",
+      "path": "C:\\Users\\ralfb\\golden\\artifacts\\19111817680-20251105-193437\\nash-outputs\\ScenarioSummary.md",
+      "size_bytes": 194,
+      "sha256": "11010fd899121ed38375973fed06d96f35164ace354b1820bf396f1bf02d17b6",
+      "modified_utc": "2025-11-05T18:50:26.6645613Z"
+    },
+    {
+      "name": "ScenarioSummary.csv",
+      "path": "C:\\Users\\ralfb\\golden\\artifacts\\19111817680-20251105-193437\\nash-outputs\\ScenarioSummary.csv",
+      "size_bytes": 177,
+      "sha256": "bc9543d16d0c22aa718ce5e7c50ce0db1e9af5f2b73ed64a0b3a1f97605bca52",
+      "modified_utc": "2025-11-05T18:50:26.7107855Z"
+    },
+    {
+      "name": "ScenarioSummary.json",
+      "path": "C:\\Users\\ralfb\\golden\\artifacts\\19111817680-20251105-193437\\nash-outputs\\ScenarioSummary.json",
+      "size_bytes": 422,
+      "sha256": "7930ba12ec6af34a4f9df0b57e1c33d4aa935c8fe8366046ba34ff88a0babf4b",
+      "modified_utc": "2025-11-05T18:50:26.7610642Z"
+    },
+    {
+      "name": "ScenarioSummary.html",
+      "path": "C:\\Users\\ralfb\\golden\\artifacts\\19111817680-20251105-193437\\nash-outputs\\ScenarioSummary.html",
+      "size_bytes": 2868,
+      "sha256": "a445526c4ddbd2c3ec589550cb45f6838be1d5453e9b3d073a02b6b14e22407a",
+      "modified_utc": "2025-11-05T18:53:26.5108851Z"
+    }
+  ]
+}

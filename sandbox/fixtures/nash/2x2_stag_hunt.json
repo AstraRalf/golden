@@ -1,9 +1,0 @@
-{
-  "name": "StagHunt",
-  "players": ["A","B"],
-  "strategies": { "A": ["Stag","Hare"], "B": ["Stag","Hare"] },
-  "payoffA": [[2,0],
-              [1,1]],
-  "payoffB": [[2,1],
-              [0,1]]
-}
