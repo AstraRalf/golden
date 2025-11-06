@@ -1,4 +1,4 @@
-﻿name: ci-whitespace
+name: ci-whitespace
 on:
   push:
     branches: ['**']
@@ -18,37 +18,74 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Whitespace/EOL checks (PowerShell)
+
+      - name: Whitespace/EOL checks (PowerShell, nur Textdateien)
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
+
+          # Whitelist für Text-Endungen
+          $textExt = 'md|markdown|yml|yaml|json|ps1|psm1|psd1|txt|sh|py|ts|tsx|js|jsx|css|scss|toml|ini|cfg|csv|xml'
+          # Dateien ohne Extension (dotfiles) erlauben:
+          $dotAllow = '^(\.gitignore|\.gitattributes|\.editorconfig|\.markdownlint\.json)$'
+
+          # Excludes (Ordner)
+          $excludeDirs = '^(\.git/|node_modules/|dist/|build/|out/|bin/|obj/|vendor/)'
+
+          # Alle getrackten Dateien
           $files = (git ls-files) -split "`n"
+          $files = $files | Where-Object {
+            $_ -and
+            ($_ -notmatch $excludeDirs) -and
+            ( $_ -match "\.($textExt)$" -or $_ -match $dotAllow )
+          }
+
           $errors = New-Object System.Collections.Generic.List[string]
+
           foreach($f in $files){
-            if([string]::IsNullOrWhiteSpace($f) -or -not (Test-Path -LiteralPath $f)){ continue }
+            if (-not (Test-Path -LiteralPath $f)) { continue }
             try {
-              $bytes = [System.IO.File]::ReadAllBytes($f)
-              if($bytes -contains 13){ $errors.Add("CR found: $f") }
               $text = Get-Content -LiteralPath $f -Raw -Encoding UTF8
+
+              # CR/LF: verbiete CR (erlaube nur LF)
+              if ($text -match "`r") { $errors.Add("CR found: $f") }
+
+              # Zeilenweise Checks
               $lines = $text -split "`n",-1
               for($i=0; $i -lt $lines.Count; $i++){
                 $line = $lines[$i]
+
+                # TABs verbieten
                 if($line -match "`t"){ $errors.Add("$f:$([int]($i+1)): TAB") }
+
+                # Trailing Whitespace
                 if($line -match "\s+$"){
                   if($f -match '\.(md|markdown)$'){
-                    $m = [regex]::Match($line,'(\s+)$'); $n = $m.Groups[1].Value.Length
-                    if($n -eq 2) { } elseif($n -gt 2) { $errors.Add("$f:$([int]($i+1)): trailing spaces ($n)") }
-                    else { $errors.Add("$f:$([int]($i+1)): trailing space") }
+                    $m = [regex]::Match($line,'(\s+)$')
+                    $n = $m.Groups[1].Value.Length
+                    if($n -eq 2) {
+                      # Markdown-Softbreak erlaubt
+                    } elseif($n -gt 2) {
+                      $errors.Add("$f:$([int]($i+1)): trailing spaces ($n)")
+                    } else {
+                      $errors.Add("$f:$([int]($i+1)): trailing space")
+                    }
                   } else {
                     $errors.Add("$f:$([int]($i+1)): trailing whitespace")
                   }
                 }
               }
+
+              # Finale Newline
               if(-not $text.EndsWith("`n")){ $errors.Add("$f: missing final newline") }
-            } catch { $errors.Add("$f: read error") }
+            } catch {
+              $errors.Add("$f: read error")
+            }
           }
+
           if($errors.Count -gt 0){
             "Whitespace issues:`n" + ($errors -join "`n") | Write-Output
             exit 1
           }
+
           "OK"
