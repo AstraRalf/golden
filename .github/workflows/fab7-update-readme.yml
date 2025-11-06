@@ -1,0 +1,76 @@
+name: FAB7 Update README Latest
+on:
+  release:
+    types: [published, edited]
+  workflow_dispatch:
+  schedule:
+    - cron: "19 3 * * *"
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Update README FAB7 block
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $headers = @{ Authorization = "Bearer $env:GH_TOKEN"; "User-Agent"="fab7-update"; "Accept"="application/vnd.github+json" }
+
+          $rel = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:REPO/releases/latest" -Headers $headers
+          if(-not $rel.tag_name -or ($rel.tag_name -notlike 'pack-*')){ throw "Latest not pack-* ($($rel.tag_name))" }
+
+          $assetZip = $rel.assets | Where-Object name -like 'Llama-FAB7-PACK-*.zip' | Select-Object -First 1
+          $assetSha = $rel.assets | Where-Object name -like 'Llama-FAB7-PACK-*.zip.sha256' | Select-Object -First 1
+          $assetMan = $rel.assets | Where-Object name -eq 'manifest.json' | Select-Object -First 1
+          $assetChk = $rel.assets | Where-Object name -eq 'CHECKSUMS.txt' | Select-Object -First 1
+          if(-not $assetZip -or -not $assetSha -or -not $assetMan -or -not $assetChk){ throw "Missing required assets" }
+
+          $shaText = Invoke-RestMethod -Uri $assetSha.browser_download_url -Headers $headers -Method Get
+          if($shaText -notmatch '^(?<hash>[0-9a-fA-F]{64})'){ throw "bad .sha256" }
+          $zipSha = $Matches.hash.ToLower()
+
+          $rm = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:REPO/contents/README.md" -Headers $headers -ErrorAction SilentlyContinue
+          $readmeSha = $null
+          $readmeText = ""
+          if($rm -and $rm.content){
+            $readmeSha = $rm.sha
+            $readmeText = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String(($rm.content -replace '\s','')))
+          }
+
+          $base = "https://github.com/$env:REPO/releases/latest/download"
+          $now = (Get-Date).ToUniversalTime().ToString('yyyy-MM-dd HH:mm:ss UTC')
+
+          $block = @"
+<!-- FAB7_PACK_START -->
+## FAB7 Pack — Latest
+
+**Release:** [$($rel.tag_name)]($($rel.html_url))
+
+**Downloads (stabil):**
+- ZIP: [$($assetZip.name)]($base/$($assetZip.name))
+- manifest.json: [$($assetMan.name)]($base/$($assetMan.name))
+- CHECKSUMS.txt: [$($assetChk.name)]($base/$($assetChk.name))
+
+**SHA256 (ZIP):**
+    $zipSha
+
+_Last update: $now_
+<!-- FAB7_PACK_END -->
+"@
+
+          $rx = [regex]::new('<!--\s*FAB7_PACK_START\s*-->.*?<!--\s*FAB7_PACK_END\s*-->', 'Singleline')
+          if($rx.IsMatch($readmeText)){ $newText = $rx.Replace($readmeText, $block, 1) }
+          else { $newText = if([string]::IsNullOrWhiteSpace($readmeText)){$block}else{$readmeText.TrimEnd()+"`r`n`r`n"+$block} }
+
+          $payload = @{
+            message = "FAB7: README latest block aktualisiert — $($rel.tag_name)"
+            content = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($newText))
+          }
+          if($readmeSha){ $payload.sha = $readmeSha }
+
+          $null = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:REPO/contents/README.md" -Headers $headers -Method PUT -Body ($payload | ConvertTo-Json -Compress)
+          "UPDATED"
