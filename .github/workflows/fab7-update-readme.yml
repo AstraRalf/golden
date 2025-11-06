@@ -1,4 +1,4 @@
-name: FAB7 Update README Latest
+﻿name: FAB7 Update README Latest
 on:
   release:
     types: [published, edited]
@@ -7,6 +7,11 @@ on:
     types: [fab7-update]
   schedule:
     - cron: "19 3 * * *"
+
+concurrency:
+  group: fab7-update-readme
+  cancel-in-progress: true
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -75,4 +80,3 @@ _Last update: $now_
           if($readmeSha){ $payload.sha = $readmeSha }
 
           $null = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:REPO/contents/README.md" -Headers $headers -Method PUT -Body ($payload | ConvertTo-Json -Compress)
-          "UPDATED"

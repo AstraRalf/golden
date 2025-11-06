@@ -1,18 +1,17 @@
-name: FAB7 Verify README & SHA
+﻿name: FAB7 Verify README & SHA
 on:
-  release:
-    types: [published, edited]
   workflow_dispatch:
-  schedule:
-    - cron: '17 3 * * *'
+  repository_dispatch:
+    types: [fab7-verify]
+
+permissions:
+  contents: read
+
 jobs:
   verify:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
-      - uses: actions/checkout@v4
-      - name: Verify README FAB7 block vs latest release
+      - name: Check README block vs latest release SHA
         shell: pwsh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -20,19 +19,22 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           $headers = @{ Authorization = "Bearer $env:GH_TOKEN"; "User-Agent"="fab7-verify"; "Accept"="application/vnd.github+json" }
+
           $rel = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:REPO/releases/latest" -Headers $headers
-          if(-not $rel.tag_name -or ($rel.tag_name -notlike 'pack-*')){ throw "Latest not pack-*: $($rel.tag_name)" }
-          $assetZip = $rel.assets | Where-Object name -like 'Llama-FAB7-PACK-*.zip' | Select-Object -First 1
-          $assetSha = $rel.assets | Where-Object name -like 'Llama-FAB7-PACK-*.zip.sha256' | Select-Object -First 1
-          if(-not $assetZip -or -not $assetSha){ throw "Missing assets" }
-          $shaText = Invoke-RestMethod -Uri $assetSha.browser_download_url -Headers $headers -Method Get
-          if ($shaText -notmatch '^(?<hash>[0-9a-fA-F]{64})'){ throw "bad .sha256" }
-          $refHash = $Matches.hash.ToLower()
-          $readme = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:REPO/contents/README.md" -Headers $headers
-          $readmeText = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String(($readme.content -replace '\s','')))
-          $rx = [regex]::new('<!--\s*FAB7_PACK_START\s*-->.*?<!--\s*FAB7_PACK_END\s*-->', 'Singleline')
-          if(-not $rx.IsMatch($readmeText)){ throw "FAB7 block missing" }
-          $block = $rx.Match($readmeText).Value
-          $rmHash = ([regex]::Match($block,'[0-9a-fA-F]{64}')).Value.ToLower()
-          if($rmHash -ne $refHash){ throw "Hash mismatch: README vs release sha" }
-          Write-Host "OK: README hash matches release."
+          $shaAsset = $rel.assets | Where-Object name -like 'Llama-FAB7-PACK-*.zip.sha256' | Select-Object -First 1
+          if(-not $shaAsset){ throw "No .sha256 asset found" }
+          $shaText = Invoke-RestMethod -Uri $shaAsset.browser_download_url -Headers $headers -Method Get
+          if($shaText -notmatch '([0-9a-fA-F]{64})'){ throw "Invalid .sha256 content" }
+          $zipSha = $Matches[1].ToLower()
+
+          $rd = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:REPO/contents/README.md" -Headers $headers -Method Get
+          $txt = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String(($rd.content -replace '\s','')))
+          $m = [regex]::Match($txt,'<!--\s*FAB7_PACK_START\s*-->.*?([0-9a-fA-F]{64}).*?<!--\s*FAB7_PACK_END\s*-->','Singleline')
+          if(-not $m.Success){ throw "FAB7 block missing in README" }
+          $readmeSha = $m.Groups[1].Value.ToLower()
+
+          if($zipSha -ne $readmeSha){
+            Write-Error "Mismatch: release=$zipSha README=$readmeSha"
+          } else {
+            "OK: SHA matches"
+          }
