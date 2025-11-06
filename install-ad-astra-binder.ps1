@@ -45,3 +45,4 @@ foreach ($p in $profiles) {
 }
 
 Write-Host "[HINWEIS] Profil jetzt neu laden:  . `$PROFILE   und dann:  ad astra+++" -ForegroundColor Cyan
+

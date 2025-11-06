@@ -32,3 +32,4 @@ jobs:
             fi
           done < <(git ls-files -z ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.ico' ':!*.pdf' ':!*.svg')
           [ $fail -eq 0 ] || exit 1
+

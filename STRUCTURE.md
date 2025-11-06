@@ -25,3 +25,4 @@
 1) decisions/0002-* – ADRs für größere Struktur-/Scope-Fragen
 2) Optional: docs/-Ordner für Leitfäden (später)
 3) Reviews: kurze Begründung im PR-Body (Elementar, 80/20)
+

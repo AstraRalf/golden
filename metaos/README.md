@@ -26,3 +26,4 @@
 - **A4 Reasoner/Planner:** Plan-Erstellung; Tool-/Agent-Auswahl.
 - **A5 Executor:** Tool-/API-Ausführung; Nebenwirkungen handhaben.
 - **A6 Auditor/Governance:** Logging; Compliance/Audit; Freigaben.
+

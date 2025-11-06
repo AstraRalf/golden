@@ -15,3 +15,4 @@ Wir benötigen einen klaren, leichten Rahmen für SPOT-Dokumente mit minimaler R
 ## Konsequenzen
 - Hohe Transparenz und Revisionspfad über ADRs/PRs.
 - Einfache Erweiterbarkeit ohne Umstrukturierung des Kerns.
+

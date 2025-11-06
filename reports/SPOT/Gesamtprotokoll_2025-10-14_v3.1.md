@@ -72,3 +72,4 @@ Main-Head: **207b106** (PR **#19**).
 - `Q&A` weiter befüllen (Seed: 20 Kernfragen je Bereich, kurze Antworten + Quelle).
 - ADR-Template & Doc-Taxonomie finalisieren und verlinken.
 - Optional: Lightweight „Weekly Q&A SPOT Check“ (15 Min).
+

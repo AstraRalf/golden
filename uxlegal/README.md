@@ -9,3 +9,4 @@
 - **Compliance Hooks:** Pre-commit/-push Regeln als Guardrails, CI-Checks später.
 
 Kurz: Anker stehen; Ausarbeitung folgt in v1.
+

@@ -3,3 +3,4 @@
 3. Motivation verankert im Output
 4. Zielkohärenz FAB7-übergreifend
 5. Spiegelblick: Future-Mirror erkennt Wirkung
+

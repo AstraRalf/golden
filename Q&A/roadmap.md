@@ -30,3 +30,4 @@
   A: vgl. ADR-0001 (Structure)
 - Q: Kommunikationskanal?
   A: PR + Canvas Decision Log
+

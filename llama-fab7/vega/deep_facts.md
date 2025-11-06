@@ -3,3 +3,4 @@
 3. Kompatibilität vor Vorschlag
 4. Alternativen: Jeder Tool-Output hat Fallback
 5. Simulation: Dry-Run testet Ausführbarkeit
+

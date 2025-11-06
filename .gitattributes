@@ -1,3 +1,10 @@
 * text=auto eol=lf
-*.ps1 text eol=lf
-*.md  text eol=lf
+
+# Images/Binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.zip binary
+*.pdf binary
+

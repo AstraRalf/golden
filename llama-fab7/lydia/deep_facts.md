@@ -3,3 +3,4 @@
 3. Clusterpflicht: Themen gruppieren
 4. 3-Sekunden-Lesbarkeit
 5. Simulation: Mirror-Reader testet Klarheit
+

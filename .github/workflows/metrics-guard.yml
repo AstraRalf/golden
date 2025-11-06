@@ -56,3 +56,4 @@ jobs:
         run: |
           echo "::error::Metrics expectations changed but PR lacks 'metrics-update' label."
           exit 1
+

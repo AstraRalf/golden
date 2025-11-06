@@ -61,3 +61,4 @@ if ($ok) {
   Write-Host "`n[Runner beendet mit Fehler] – Fenster bleibt 60s offen." -ForegroundColor Red
   Start-Sleep -Seconds 60
 }
+

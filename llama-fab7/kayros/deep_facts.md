@@ -3,3 +3,4 @@
 3. Must/Should/Later: Prioritätsfilter
 4. Pufferdenken: Zeitfenster mit Reserve
 5. Kairos-Sense: erkennt günstige Zeitpunkte
+

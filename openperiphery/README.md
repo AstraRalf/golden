@@ -9,3 +9,4 @@
 - **Postgres** — Read-only Abfragen
 
 Kurz: Namen stehen; Details/Scopes folgen in v1.
+

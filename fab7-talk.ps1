@@ -125,3 +125,4 @@ $userText
 Write-Host "Session beendet." -ForegroundColor Cyan
 '@ | Set-Content -Path $path -Encoding UTF8
 Write-Host ("[OK] fab7-talk.ps1 gespeichert: {0}" -f $path) -ForegroundColor Green
+
