@@ -15,6 +15,7 @@ Master-SPOT Arbeitsbereich (Lama/Seat-Stack).
 - CHECKSUMS.txt: [CHECKSUMS.txt](https://github.com/AstraRalf/golden/releases/latest/download/CHECKSUMS.txt)
 
 **SHA256 (ZIP):**
+    5d34bab352c5b48609d8354b6751ae703d0673380d696115a61ad0fa71516938
 
-_Last update: 2025-11-06 15:23:19 +01:00_
+_Last update: 
 <!-- FAB7_PACK_END -->
