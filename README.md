@@ -18,6 +18,5 @@ Master-SPOT Arbeitsbereich (Lama/Seat-Stack).
     5d34bab352c5b48609d8354b6751ae703d0673380d696115a61ad0fa71516938
 
 _Last update: 
-<!-- FAB7_PACK_END -->
-
+<!-- FAB7_PACK_END -->  
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* nash.js — 2x2 Nash checks (pure/mixed) + PoA (utility|cost) + JSON output */
+/* nash.js ï¿½ 2x2 Nash checks (pure/mixed) + PoA (utility|cost) + JSON output */
 const fs = require('fs');
 
 function parseArgs(argv){
@@ -170,3 +170,4 @@ function main(){
   if(args.json) printJSON(res); else printText(res);
 }
 if(require.main===module){ try{ main(); } catch(e){ console.error('ERROR:', e.message); process.exit(2); } }
+
