@@ -1,3 +1,7 @@
+#!/usr/bin/env pwsh
+#requires -PSEdition Core
+#requires -Version 7.4
+
 # =============================================
 # FAB7 â€“ Risk-Audit von memory.yaml (Final)
 # Ort:   C:\Users\ralfb\golden\risk-audit.ps1
@@ -148,4 +152,5 @@ foreach ($agent in $agents) {
 
   Set-Content -Path $file -Value $clean -Encoding UTF8
 }
+
 

@@ -1,3 +1,7 @@
+#!/usr/bin/env pwsh
+#requires -PSEdition Core
+#requires -Version 7.4
+
 <#
  FAB7 Console â€“ Orchestrator (inkl. Schritt A/Mandat)
  Ort:  PS C:\Users\ralfb\golden  (von hier ausfÃ¼hren)
@@ -357,4 +361,5 @@ catch {
   Write-Host ("[ERR] {0}" -f $_.Exception.Message) -ForegroundColor Red
   exit 1
 }
+
 

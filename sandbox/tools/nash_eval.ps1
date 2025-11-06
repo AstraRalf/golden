@@ -1,3 +1,7 @@
+#!/usr/bin/env pwsh
+#requires -PSEdition Core
+#requires -Version 7.4
+
 Param(
   [Parameter(Mandatory=$true)][string]$Path,
   [switch]$AnyNE,
@@ -107,3 +111,4 @@ if($PureNE){ if($hasPure){ exit 0 } else { exit 1 } }
 if($AnyNE){ if($hasPure -or $mixed){ exit 0 } else { exit 1 } }
 if($ComputeMixed){ if($mixed){ exit 0 } else { exit 1 } }
 exit 0
+

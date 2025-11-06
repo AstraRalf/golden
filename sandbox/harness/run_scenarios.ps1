@@ -1,3 +1,7 @@
+#!/usr/bin/env pwsh
+#requires -PSEdition Core
+#requires -Version 7.4
+
 Param([string]$Dir = "sandbox/scenarios")
 $ErrorActionPreference = "Stop"
 
@@ -67,3 +71,4 @@ foreach($f in $files){
 
 Write-Host "[scenarios] all runs successful."
 exit 0
+

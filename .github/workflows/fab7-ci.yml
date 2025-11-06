@@ -1,5 +1,8 @@
 name: FAB7 CI
-on:
+
+defaults:
+  run:
+    shell: pwshon:
   workflow_dispatch:
   pull_request:
     branches: [ main ]
@@ -33,3 +36,4 @@ jobs:
           } else {
             "" | Out-File -FilePath scenario-summary.md -Encoding utf8
           }
+

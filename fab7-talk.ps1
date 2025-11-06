@@ -1,3 +1,7 @@
+#!/usr/bin/env pwsh
+#requires -PSEdition Core
+#requires -Version 7.4
+
 # In PS C:\Users\ralfb\golden ausfÃ¼hren:
 $path = "C:\Users\ralfb\golden\fab7-talk.ps1"
 @'
@@ -125,4 +129,5 @@ $userText
 Write-Host "Session beendet." -ForegroundColor Cyan
 '@ | Set-Content -Path $path -Encoding UTF8
 Write-Host ("[OK] fab7-talk.ps1 gespeichert: {0}" -f $path) -ForegroundColor Green
+
 

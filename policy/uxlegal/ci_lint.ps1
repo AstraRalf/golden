@@ -1,3 +1,7 @@
+#!/usr/bin/env pwsh
+#requires -PSEdition Core
+#requires -Version 7.4
+
 $ErrorActionPreference = "Stop"
 
 function Get-ChangedFiles {
@@ -113,3 +117,4 @@ if($all.Count -gt 0){
   Write-Host "UXLegal: keine Hinweise (diff-only, waivers berücksichtigt)."
 }
 exit 0
+

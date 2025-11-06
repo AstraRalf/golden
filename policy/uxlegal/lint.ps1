@@ -1,3 +1,7 @@
+#!/usr/bin/env pwsh
+#requires -PSEdition Core
+#requires -Version 7.4
+
 $ErrorActionPreference="Stop"
 function Get-StagedFiles { (git diff --name-only --cached) -split "`n" | Where-Object { $_ -and (Test-Path $_) } }
 . "$PSScriptRoot\ci_lint.ps1"  # Re-use Functions (Get-ChangedFiles wird ignoriert)
@@ -13,3 +17,4 @@ foreach($f in $files){
 }
 if($all.Count -gt 0){ Write-Warning "UXLegal (advisory, staged):"; $all | Sort-Object | ForEach-Object{ Write-Host " - $_" } } else { Write-Host "UXLegal: keine Hinweise." }
 exit 0
+

@@ -1,6 +1,9 @@
 name: Step16 Nash Runner
 
-on:
+
+defaults:
+  run:
+    shell: pwshon:
   pull_request:
     paths:
       - "step16_nash/**"
@@ -14,7 +17,10 @@ on:
 jobs:
   nash:
     name: 2x2 Nash checks (util+cost) + artifacts
-    runs-on: ubuntu-latest
+    
+defaults:
+  run:
+    shell: pwshruns-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -61,6 +67,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: step16-nash-out
-          path: step16_nash/out
+          
+defaults:
+  run:
+    shell: pwshpath: step16_nash/out
           if-no-files-found: error
+
 

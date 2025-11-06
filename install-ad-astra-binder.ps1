@@ -1,3 +1,7 @@
+#!/usr/bin/env pwsh
+#requires -PSEdition Core
+#requires -Version 7.4
+
 [CmdletBinding()]
 param(
   [string]$Model = 'llama3'
@@ -45,4 +49,5 @@ foreach ($p in $profiles) {
 }
 
 Write-Host "[HINWEIS] Profil jetzt neu laden:  . `$PROFILE   und dann:  ad astra+++" -ForegroundColor Cyan
+
 

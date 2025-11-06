@@ -1,3 +1,7 @@
+#!/usr/bin/env pwsh
+#requires -PSEdition Core
+#requires -Version 7.4
+
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 param(
   [Parameter(Mandatory=$true)][string]$AgentName,
@@ -61,4 +65,5 @@ if ($ok) {
   Write-Host "`n[Runner beendet mit Fehler] – Fenster bleibt 60s offen." -ForegroundColor Red
   Start-Sleep -Seconds 60
 }
+
 

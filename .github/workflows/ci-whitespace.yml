@@ -1,5 +1,8 @@
 name: ci-whitespace
-on:
+
+defaults:
+  run:
+    shell: pwshon:
   push:
     branches: ['**']
   pull_request:
@@ -89,3 +92,4 @@ jobs:
           }
 
           "OK"
+

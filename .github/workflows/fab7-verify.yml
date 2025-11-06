@@ -1,5 +1,8 @@
-﻿name: FAB7 Verify README & SHA
-on:
+name: FAB7 Verify README & SHA
+
+defaults:
+  run:
+    shell: pwshon:
   workflow_dispatch:
   repository_dispatch:
     types: [fab7-verify]
@@ -55,3 +58,4 @@ jobs:
           } else {
             "OK: SHA matches"
           }
+

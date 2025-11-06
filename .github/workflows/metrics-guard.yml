@@ -1,6 +1,9 @@
 name: Metrics Guard (Step16)
 
-on:
+
+defaults:
+  run:
+    shell: pwshon:
   pull_request:
     types: [opened, synchronize, reopened, labeled, unlabeled, edited]
     paths:
@@ -21,7 +24,10 @@ jobs:
       # Prüfe, ob sich die erwarteten Metrik-Zeilen im step16-Workflow geändert haben
       - id: diff
         name: Detect expectation changes in step16-nash.yml
-        shell: bash
+        
+defaults:
+  run:
+    shell: pwshshell: bash
         run: |
           set -e
           file=".github/workflows/step16-nash.yml"
@@ -38,7 +44,10 @@ jobs:
       # Labels direkt aus dem Event-Kontext (ohne gh)
       - id: labels
         name: Read labels from PR event
-        uses: actions/github-script@v7
+        
+defaults:
+  run:
+    shell: pwshuses: actions/github-script@v7
         with:
           script: |
             const labels = (context.payload.pull_request?.labels || []).map(l => l.name);
@@ -56,4 +65,5 @@ jobs:
         run: |
           echo "::error::Metrics expectations changed but PR lacks 'metrics-update' label."
           exit 1
+
 
