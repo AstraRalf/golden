@@ -16,5 +16,5 @@ Master-SPOT Arbeitsbereich (Lama/Seat-Stack).
 
 **SHA256 (ZIP):**
 
-_Last update: 2025-11-06 15:21:09 +01:00_
+_Last update: 2025-11-06 15:23:19 +01:00_
 <!-- FAB7_PACK_END -->
