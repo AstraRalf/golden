@@ -1,3 +1,4 @@
+on: [workflow_dispatch]
 name: ci-markdown
 
 defaults:
@@ -26,4 +27,5 @@ jobs:
           cache: 'npm'
       - name: markdownlint-cli2
         run: npx -y markdownlint-cli2@0.14.0 "**/*.md" "#node_modules"
+
 

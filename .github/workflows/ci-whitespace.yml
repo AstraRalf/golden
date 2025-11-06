@@ -1,3 +1,4 @@
+on: [workflow_dispatch]
 name: ci-whitespace
 
 defaults:
@@ -92,4 +93,5 @@ jobs:
           }
 
           "OK"
+
 
