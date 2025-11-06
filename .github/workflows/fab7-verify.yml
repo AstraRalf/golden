@@ -1,4 +1,4 @@
-﻿name: FAB7 Verify README & SHA
+name: FAB7 Verify README & SHA
 on:
   workflow_dispatch:
   repository_dispatch:

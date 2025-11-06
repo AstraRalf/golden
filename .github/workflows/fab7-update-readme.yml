@@ -1,4 +1,4 @@
-﻿name: FAB7 Update README Latest
+name: FAB7 Update README Latest
 on:
   release:
     types: [published, edited]
