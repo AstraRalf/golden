@@ -1,10 +1,2 @@
-* text=auto eol=lf
-
-# Images/Binary
-*.png binary
-*.jpg binary
-*.jpeg binary
-*.gif binary
-*.zip binary
-*.pdf binary
+﻿
 
