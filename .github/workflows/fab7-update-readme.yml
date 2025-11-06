@@ -3,6 +3,8 @@ on:
   release:
     types: [published, edited]
   workflow_dispatch:
+  repository_dispatch:
+    types: [fab7-update]
   schedule:
     - cron: "19 3 * * *"
 jobs:
