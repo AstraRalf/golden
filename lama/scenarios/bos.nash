@@ -1,0 +1,7 @@
+# Battle of the Sexes
+A: Opera, Football
+B: Opera, Football
+(Opera, Opera)     = 2,1
+(Opera, Football)  = 0,0
+(Football, Opera)  = 0,0
+(Football, Football)= 1,2

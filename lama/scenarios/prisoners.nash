@@ -1,0 +1,7 @@
+# Prisoners' Dilemma
+A: Cooperate, Defect
+B: Cooperate, Defect
+(Cooperate, Cooperate) = 3,3
+(Cooperate, Defect)   = 0,5
+(Defect, Cooperate)   = 5,0
+(Defect, Defect)      = 1,1
