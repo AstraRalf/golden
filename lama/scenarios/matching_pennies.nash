@@ -1,0 +1,7 @@
+# Matching Pennies
+A: Heads, Tails
+B: Heads, Tails
+(Heads, Heads) = 1,-1
+(Heads, Tails) = -1,1
+(Tails, Heads) = -1,1
+(Tails, Tails) = 1,-1

@@ -1,0 +1,16 @@
+name: nash2x2
+on:
+  push:
+    branches: [ "feature/nash-probes" ]
+  pull_request:
+    branches: [ "main", "master" ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -q --upgrade pip pytest
+      - run: python -m pytest -q
