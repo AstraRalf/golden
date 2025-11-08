@@ -4,9 +4,8 @@ defaults:
   run:
 shell: pwsh
 on:
-  pull_request::
+  pull_request:
   workflow_dispatch:
-    branches: [ main ]
 jobs:
   scenarios:
     runs-on: windows-latest
