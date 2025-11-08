@@ -26,3 +26,6 @@ build/
 *.bak
 *.bak.*step16_nash/ci_out/
 step16_nash/ci_out_latest/
+.venv/
+docs/OPS/
+*.pyc
