@@ -3,11 +3,10 @@ name: Step16 Nash Runner
 
 defaults:
   run:
-    shell: pwshon:
+shell: pwsh
+on:
   pull_request:
-    paths:
-      - "step16_nash/**"
-      - ".github/workflows/step16-nash.yml"
+  workflow_dispatch:
   push:
     branches: [ feat/step16-nash-runner ]
     paths:
@@ -22,6 +21,10 @@ defaults:
   run:
     shell: pwshruns-on: ubuntu-latest
     steps:
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -72,5 +75,4 @@ defaults:
   run:
     shell: pwshpath: step16_nash/out
           if-no-files-found: error
-
 

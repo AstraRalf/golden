@@ -2,17 +2,21 @@ name: FAB7 Scenarios
 
 defaults:
   run:
-    shell: pwshon:
+shell: pwsh
+on:
   pull_request:
-    branches: [ main ]
+  workflow_dispatch:
 jobs:
   scenarios:
     runs-on: windows-latest
     steps:
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Run Scenario DSL
         shell: pwsh
         run: pwsh -NoLogo -File sandbox/harness/run_scenarios.ps1
-

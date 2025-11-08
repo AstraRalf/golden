@@ -2,7 +2,8 @@ name: FAB7 Verify README & SHA
 
 defaults:
   run:
-    shell: pwshon:
+shell: pwsh
+on:
   workflow_dispatch:
   repository_dispatch:
     types: [fab7-verify]
@@ -14,7 +15,11 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - name: Check README block vs pack-* release SHA (robust; SKIP wenn nicht möglich)
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check README block vs pack-* release SHA (robust; SKIP wenn nicht m├Âglich)
         shell: pwsh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -58,4 +63,3 @@ jobs:
           } else {
             "OK: SHA matches"
           }
-

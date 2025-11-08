@@ -2,7 +2,8 @@ name: FAB7 CI
 
 defaults:
   run:
-    shell: pwshon:
+shell: pwsh
+on:
   workflow_dispatch:
   pull_request:
     branches: [ main ]
@@ -10,6 +11,10 @@ jobs:
   lint_and_smoke:
     runs-on: windows-latest
     steps:
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -36,4 +41,3 @@ jobs:
           } else {
             "" | Out-File -FilePath scenario-summary.md -Encoding utf8
           }
-
