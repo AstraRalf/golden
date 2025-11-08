@@ -19,6 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Node

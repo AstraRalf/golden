@@ -22,6 +22,10 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Update README FAB7 block (robust, NOOP wenn kein passendes Release)
         shell: pwsh
         env:
