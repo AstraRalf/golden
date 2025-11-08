@@ -1,4 +1,5 @@
 # golden
+[![CI — nash](https://github.com/AstraRalf/golden/actions/workflows/nash.yml/badge.svg?branch=main)](https://github.com/AstraRalf/golden/actions/workflows/nash.yml)
 
 Master-SPOT Arbeitsbereich (Lama/Seat-Stack).
 
@@ -19,6 +20,7 @@ Master-SPOT Arbeitsbereich (Lama/Seat-Stack).
 
 _Last update: 
 <!-- FAB7_PACK_END -->  
+
 
 
 
