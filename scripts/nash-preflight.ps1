@@ -31,6 +31,9 @@ if ($yaml -match '(?m)^\s*cache\s*:\s*\S+') { Bad "Workflow nutzt 'cache:' im se
 $patternPyPath = '(?s)\bjobs\s*:\s*.*?\btest-and-export\s*:\s*.*?\benv\s*:\s*.*?\bPYTHONPATH\s*:\s*\$\{\{\s*github\.workspace\s*\}\}'
 $hasPyPath     = [regex]::IsMatch($yaml, $patternPyPath)
 $hasPyProject  = Test-Path 'pyproject.toml'
+
+$pkgLabel = if ($hasPyProject) { 'pyproject.toml' } elseif (Test-Path 'setup.py') { 'setup.py' } else { 'none' }
+
 $hasSetup      = (@(Get-ChildItem -File -Name 'setup.*' -ErrorAction SilentlyContinue).Count -gt 0)
 
 if ($hasPyProject -or $hasSetup) {
