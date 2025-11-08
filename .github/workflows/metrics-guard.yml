@@ -5,7 +5,8 @@ defaults:
   run:
 shell: pwsh
 on:
-  pull_request:
+  pull_request::
+  workflow_dispatch:
     types: [opened, synchronize, reopened, labeled, unlabeled, edited]
     paths:
       - ".github/workflows/step16-nash.yml"

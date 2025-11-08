@@ -5,7 +5,8 @@ defaults:
   run:
 shell: pwsh
 on:
-  pull_request:
+  pull_request::
+  workflow_dispatch:
     paths:
       - "step16_nash/**"
       - ".github/workflows/step16-nash.yml"

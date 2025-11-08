@@ -1,6 +1,7 @@
 name: nash2x2
 on:
-  push:
+  push::
+  workflow_dispatch:
     branches: [ "main" ]
   pull_request:
     branches: [ "main", "master" ]
