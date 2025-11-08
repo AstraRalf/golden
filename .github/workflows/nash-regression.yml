@@ -1,0 +1,50 @@
+name: nash regression
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  test-and-export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install
+        shell: bash
+        run: |
+          python -m pip install -U pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f pyproject.toml ] || ls setup.* >/dev/null 2>&1; then pip install -e .; fi
+          pip install pytest
+
+      - name: Pytest
+        shell: bash
+        run: pytest -q
+
+      - name: Export scenarios to JSON (runner)
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p runner_json
+          find . -type f -name "*.nash" | head -n 50 | while IFS= read -r f; do
+            base="$(basename "$f" .nash)"
+            python -m lama.nash.runner --in "$f" --format json > "runner_json/${base}.json" || true
+          done
+
+      - name: Upload JSON artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nash-outputs
+          path: runner_json
+          if-no-files-found: warn
