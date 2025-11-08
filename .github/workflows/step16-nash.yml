@@ -3,7 +3,8 @@ name: Step16 Nash Runner
 
 defaults:
   run:
-    shell: pwshon:
+shell: pwsh
+on:
   pull_request:
     paths:
       - "step16_nash/**"
@@ -72,5 +73,4 @@ defaults:
   run:
     shell: pwshpath: step16_nash/out
           if-no-files-found: error
-
 

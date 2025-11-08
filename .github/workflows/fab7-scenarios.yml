@@ -2,7 +2,8 @@ name: FAB7 Scenarios
 
 defaults:
   run:
-    shell: pwshon:
+shell: pwsh
+on:
   pull_request:
     branches: [ main ]
 jobs:
@@ -15,4 +16,3 @@ jobs:
       - name: Run Scenario DSL
         shell: pwsh
         run: pwsh -NoLogo -File sandbox/harness/run_scenarios.ps1
-

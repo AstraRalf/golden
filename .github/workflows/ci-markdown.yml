@@ -3,7 +3,8 @@ name: ci-markdown
 
 defaults:
   run:
-    shell: pwshon:
+shell: pwsh
+on:
   push:
     branches: ['**']
   pull_request:
@@ -27,5 +28,4 @@ jobs:
           cache: 'npm'
       - name: markdownlint-cli2
         run: npx -y markdownlint-cli2@0.14.0 "**/*.md" "#node_modules"
-
 

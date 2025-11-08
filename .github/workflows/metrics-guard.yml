@@ -3,7 +3,8 @@ name: Metrics Guard (Step16)
 
 defaults:
   run:
-    shell: pwshon:
+shell: pwsh
+on:
   pull_request:
     types: [opened, synchronize, reopened, labeled, unlabeled, edited]
     paths:
@@ -21,7 +22,7 @@ jobs:
         with:
           fetch-depth: 2
 
-      # Prüfe, ob sich die erwarteten Metrik-Zeilen im step16-Workflow geändert haben
+      # Pr├╝fe, ob sich die erwarteten Metrik-Zeilen im step16-Workflow ge├ñndert haben
       - id: diff
         name: Detect expectation changes in step16-nash.yml
         
@@ -59,11 +60,10 @@ defaults:
           echo "changed=${{ steps.diff.outputs.changed }}"
           printf "labels:\n%s\n" "${{ steps.labels.outputs.labels }}"
 
-      # Fail NUR wenn Metrik-Erwartungen geändert wurden UND das Label fehlt
+      # Fail NUR wenn Metrik-Erwartungen ge├ñndert wurden UND das Label fehlt
       - name: Enforce metrics-update label
         if: ${{ steps.diff.outputs.changed == 'true' && !contains(steps.labels.outputs.labels, 'metrics-update') }}
         run: |
           echo "::error::Metrics expectations changed but PR lacks 'metrics-update' label."
           exit 1
-
 

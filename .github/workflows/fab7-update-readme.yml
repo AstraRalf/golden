@@ -2,7 +2,8 @@ name: FAB7 Update README Latest
 
 defaults:
   run:
-    shell: pwshon:
+shell: pwsh
+on:
   release:
     types: [published, edited]
   workflow_dispatch:
@@ -49,7 +50,7 @@ jobs:
 
           $rel = Get-PackRelease
           if(-not $rel){
-            "NOOP: kein passendes pack-* Release mit vollständigen Assets gefunden."
+            "NOOP: kein passendes pack-* Release mit vollst├ñndigen Assets gefunden."
             exit 0
           }
 
@@ -58,7 +59,7 @@ jobs:
           $assetMan = $rel.assets | Where-Object name -eq 'manifest.json' | Select-Object -First 1
           $assetChk = $rel.assets | Where-Object name -eq 'CHECKSUMS.txt' | Select-Object -First 1
           if(-not $assetZip -or -not $assetSha -or -not $assetMan -or -not $assetChk){
-            "NOOP: Assets unvollständig."
+            "NOOP: Assets unvollst├ñndig."
             exit 0
           }
 
@@ -78,7 +79,7 @@ jobs:
 
           $block = @"
 <!-- FAB7_PACK_START -->
-## FAB7 Pack — Latest
+## FAB7 Pack ÔÇö Latest
 
 **Release:** [$($rel.tag_name)]($($rel.html_url))
 
@@ -98,8 +99,7 @@ _Last update: $now_
           if($rx.IsMatch($readmeText)){ $newText = $rx.Replace($readmeText, $block, 1) }
           else { $newText = if([string]::IsNullOrWhiteSpace($readmeText)){$block}else{$readmeText.TrimEnd()+"`r`n`r`n"+$block} }
 
-          $payload = @{ message = "FAB7: README latest block aktualisiert — $($rel.tag_name)"; content = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($newText)) }
+          $payload = @{ message = "FAB7: README latest block aktualisiert ÔÇö $($rel.tag_name)"; content = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($newText)) }
           if($readmeSha){ $payload.sha = $readmeSha }
 
           $null = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:REPO/contents/README.md" -Headers $headers -Method PUT -Body ($payload | ConvertTo-Json -Compress)
-
