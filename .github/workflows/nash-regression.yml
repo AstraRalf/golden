@@ -8,8 +8,18 @@ on:
   workflow_dispatch:
 
 jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run preflight (read-only)
+        shell: pwsh
+        run: |
+          ./scripts/nash-preflight.ps1 -ci
+
   test-and-export:
     runs-on: ubuntu-latest
+    needs: preflight
     env:
       PYTHONPATH: ${{ github.workspace }}
     steps:
